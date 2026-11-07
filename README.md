@@ -1,1 +1,102 @@
 # xd
+from pathlib import Path
+
+from zipfile import ZipFile, ZIP_DEFLATED
+
+base = Path("/mnt/data/pusheen_xd_site")
+
+html = """<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#ffe6f0">
+
+  <title>xd ♡</title>
+
+  <style>
+
+    * { box-sizing: border-box; }
+
+    body {
+
+      min-height: 100vh;
+
+      margin: 0;
+
+      display: grid;
+
+      place-items: center;
+
+      padding: 24px;
+
+      background: #ffe6f0;
+
+    }
+
+    main {
+
+      width: min(100%, 520px);
+
+      padding: 22px;
+
+      border: 2px solid #f7c6d8;
+
+      border-radius: 28px;
+
+      background: rgba(255, 255, 255, .78);
+
+      box-shadow: 0 12px 35px rgba(160, 91, 119, .12);
+
+    }
+
+    img {
+
+      display: block;
+
+      width: 100%;
+
+      max-width: 420px;
+
+      height: auto;
+
+      margin: 0 auto;
+
+      border-radius: 18px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <main>
+
+    <img src="pusheen.jpeg" alt="A sleepy, stretched-out Pusheen cat">
+
+  </main>
+
+</body>
+
+</html>
+
+"""
+
+(base / "index.html").write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/xd-pusheen-website-updated.zip")
+
+with ZipFile(zip_path, "w", ZIP_DEFLATED) as z:
+
+    z.write(base / "index.html", "index.html")
+
+    z.write(base / "pusheen.jpeg", "pusheen.jpeg")
+
+print(f"Updated website ZIP: {zip_path}")
